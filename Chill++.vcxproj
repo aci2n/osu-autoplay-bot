@@ -80,9 +80,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <Text Include="ReadMe.txt" />
-  </ItemGroup>
-  <ItemGroup>
     <ClInclude Include="Beatmap.h" />
     <ClInclude Include="BeatmapParser.h" />
     <ClInclude Include="CoordinatesTranslator.h" />
