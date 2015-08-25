@@ -1,11 +1,8 @@
 #include "stdafx.h"
 #include "BeatmapParser.h"
 
-const std::vector<std::string> sliderIdentifiers(std::initializer_list<std::string>{"2", "3", "6", "22", "38", "70"});
-const std::vector<std::string> spinnerIdentifiers(std::initializer_list<std::string>{"8", "12"});
-
 BeatmapParser::BeatmapParser(std::string filename) : mFilename(filename)
-{
+{	
 }
 
 
@@ -57,7 +54,7 @@ std::vector<TimingSection> BeatmapParser::read_timing_sections(std::ifstream& fi
 	double currentFather;
 	for (std::string line; std::getline(file, line) && line != "";)
 	{
-		std::vector<std::string> tokens = split(line, ",");
+		std::vector<std::string> tokens = mUtilities.split(line, ",");
 		int startTime = std::stoi(tokens[0]);
 		double msPerBeat = std::stod(tokens[1]);
 		if (msPerBeat > 0)
@@ -75,63 +72,15 @@ std::vector<TimingSection> BeatmapParser::read_timing_sections(std::ifstream& fi
 
 void BeatmapParser::add_hitobjects(std::ifstream& file, Beatmap& beatmap)
 {
+	HitObjectParser hitObjectParser(beatmap);
 	read_until_line(file, "[HitObjects]");
 	for (std::string line; std::getline(file, line) && line != "";)
 	{
-		std::vector<std::string> tokens = split(line, ",");
-		int x = std::stoi(tokens[0]);
-		int y = std::stoi(tokens[1]);
-		int time = std::stoi(tokens[2]);
-		TimingSection section = beatmap.get_section_at(time);
-		bool isSpinner = false;
-		int holdFor = 0;
-		if (contains(sliderIdentifiers, tokens[3]))
-		{
-			double factor = section.ms_per_beat() / beatmap.slider_multiplier();
-			double relativeDuration = std::stod(tokens[7]);
-			double bounces = std::stod(tokens[6]);
-			holdFor = (int)(factor * relativeDuration * bounces);
-		}
-		if (contains(spinnerIdentifiers, tokens[3]))
-		{
-			holdFor = std::stoi(tokens[5]) - time;
-			isSpinner = true;
-		}
-		beatmap.add_hit_object(HitObject(time, holdFor, isSpinner, x, y));
+		beatmap.add_hit_object(hitObjectParser.parse_hitobject(line));
 	}
-}
-
-template<typename T>
-bool BeatmapParser::contains(std::vector<T> v, T t)
-{
-	for (T x : v)
-	{
-		if (x == t)
-		{
-			return true;
-		}
-	}
-	return false;
 }
 
 void BeatmapParser::read_until_line(std::ifstream& file, std::string line)
 {
 	for (std::string s; std::getline(file, s) && s != line;);
-}
-
-std::vector<std::string> BeatmapParser::split(std::string base, std::string delim)
-{
-	std::string token;
-	int pos;
-	std::vector<std::string> tokens;
-	while ((pos = base.find(delim)) != std::string::npos) {
-		token = base.substr(0, pos);
-		base = base.substr(pos + 1, base.length());
-		tokens.push_back(token);
-	}
-	if (base.length() > 0)
-	{
-		tokens.push_back(base);
-	}
-	return tokens;
 }

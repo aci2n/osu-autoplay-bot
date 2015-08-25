@@ -6,6 +6,6 @@ class CoordinatesTranslator
 public:
 	CoordinatesTranslator();
 	~CoordinatesTranslator();
-	void translate_coordinates(RECT, std::vector<HitObject>*);
+	std::vector<int> translate_coordinates(RECT, std::vector<HitObject>*);
 };
 

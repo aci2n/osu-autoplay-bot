@@ -11,8 +11,10 @@ class Player
 	std::vector<HitObject> mHitObjects;
 public:
 	Player();
-	Player(std::vector<HitObject>, RECT);
+	Player(std::vector<HitObject>, RECT, std::vector<int>);
 	void operator()();
 	~Player();
+private:
+	void processHitObjectHold(HitObject*, int*, int*, int*);
 };
 

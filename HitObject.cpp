@@ -2,8 +2,8 @@
 #include "HitObject.h"
 
 
-HitObject::HitObject(int startTime, int holdFor, bool isSpinner, int x, int y)
-: mStartTime(startTime), mHoldFor(holdFor), mIsSpinner(isSpinner), mX(x), mY(y)
+HitObject::HitObject(int startTime, int holdFor, int x, int y, HitObjectType type)
+: mStartTime(startTime), mHoldFor(holdFor), mX(x), mY(y), mType(type)
 {
 }
 
@@ -22,11 +22,6 @@ int HitObject::hold_for()
 	return mHoldFor;
 }
 
-bool HitObject::is_spinner()
-{
-	return mIsSpinner;
-}
-
 void HitObject::set_coordinates(int x, int y)
 {
 	mX = x;
@@ -41,4 +36,9 @@ int HitObject::x()
 int HitObject::y()
 {
 	return mY;
+}
+
+HitObjectType HitObject::type()
+{
+	return mType;
 }

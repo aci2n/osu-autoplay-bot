@@ -1,13 +1,20 @@
 #pragma once
+
+enum HitObjectType {
+	NORMAL,
+	SLIDER,
+	SPINNER
+};
+
 class HitObject
 {
 	int mStartTime;
 	int mHoldFor;
-	bool mIsSpinner;
 	int mX;
 	int mY;
+	HitObjectType mType;
 public:
-	HitObject(int startTime, int holdFor, bool isSpinner, int x, int y);
+	HitObject(int startTime, int holdFor, int x, int y, HitObjectType type);
 	~HitObject();
 	int start_time();
 	int hold_for();
@@ -15,5 +22,6 @@ public:
 	void set_coordinates(int, int);
 	int x();
 	int y();
+	HitObjectType type();
 };
 
