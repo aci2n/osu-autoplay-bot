@@ -28,12 +28,22 @@ std::vector<int> CoordinatesTranslator::translate_coordinates(RECT rect, std::ve
 
 	int finalX;
 	int finalY;
+	std::vector<SliderMovement>* pSliders;
+	std::pair<int, int> to;
 
 	for (HitObject& h : *hitObjects)
 	{
 		finalX = playAreaLeft + (int)(h.x() * factorX);
 		finalY = playAreaTop + (int)(h.y() * factorY);
 		h.set_coordinates(finalX, finalY);
+		pSliders = h.slider_movements();
+		for (int i = 0; i < pSliders->size(); i++)
+		{
+			to = pSliders->at(i).to();
+			finalX = playAreaLeft + (int)(to.first * factorX);
+			finalY = playAreaTop + (int)(to.second * factorY);
+			pSliders->at(i).set_pair(finalX, finalY);
+		}
 	}
 
 	std::vector<int> v(3);

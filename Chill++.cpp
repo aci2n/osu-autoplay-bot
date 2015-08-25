@@ -11,7 +11,7 @@ int _tmain(int argc, _TCHAR* argv[])
 {
 	try
 	{
-		BeatmapParser parser(R"(C:\Users\alvaro.daniel.calace\AppData\Local\osu!\Songs\163112 Kuba Oms - My Love\Kuba Oms - My Love (W h i t e) [Insane].osu)");
+		BeatmapParser parser(R"(C:\Users\alvaro.daniel.calace\AppData\Local\osu!\Songs\118768 xi - Akasha\xi - Akasha (Jemmmmy) [Test].osu)");
 		Beatmap beatmap(parser.parse_beatmap());
 		int procId = ProcessIdFinder().get_process_id(std::wstring(L"osu!.exe"));
 		WindowHelper w;

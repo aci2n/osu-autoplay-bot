@@ -2,8 +2,8 @@
 #include "HitObject.h"
 
 
-HitObject::HitObject(int startTime, int holdFor, int x, int y, HitObjectType type)
-: mStartTime(startTime), mHoldFor(holdFor), mX(x), mY(y), mType(type)
+HitObject::HitObject(int startTime, int holdFor, int x, int y, HitObjectType type, std::vector<SliderMovement> sliderMovements)
+	: mStartTime(startTime), mHoldFor(holdFor), mX(x), mY(y), mType(type), mSliderMovements(sliderMovements)
 {
 }
 
@@ -41,4 +41,9 @@ int HitObject::y()
 HitObjectType HitObject::type()
 {
 	return mType;
+}
+
+std::vector<SliderMovement>* HitObject::slider_movements()
+{
+	return &mSliderMovements;
 }

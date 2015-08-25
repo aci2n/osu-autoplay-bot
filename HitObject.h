@@ -1,4 +1,5 @@
 #pragma once
+#include "SliderMovement.h"
 
 enum HitObjectType {
 	NORMAL,
@@ -13,8 +14,9 @@ class HitObject
 	int mX;
 	int mY;
 	HitObjectType mType;
+	std::vector<SliderMovement> mSliderMovements;
 public:
-	HitObject(int startTime, int holdFor, int x, int y, HitObjectType type);
+	HitObject(int startTime, int holdFor, int x, int y, HitObjectType type, std::vector<SliderMovement>);
 	~HitObject();
 	int start_time();
 	int hold_for();
@@ -23,5 +25,6 @@ public:
 	int x();
 	int y();
 	HitObjectType type();
+	std::vector<SliderMovement>* slider_movements();
 };
 

@@ -94,8 +94,8 @@ void MouseRobot::emulate_spin(int time, int* lastX, int* lastY)
 		n = n < 3 ? n + 1 : 0;
 	}
 
-	*lastX = (mSpinnerPoints)[c].first;
-	*lastY = (mSpinnerPoints)[c].second;
+	*lastX = mSpinnerPoints[c].first;
+	*lastY = mSpinnerPoints[c].second;
 }
 
 void MouseRobot::init_spinner_points(int x, int y, int spinnerWidth)

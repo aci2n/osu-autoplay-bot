@@ -13,8 +13,8 @@ Player::Player()
 }
 
 Player::Player(std::vector<HitObject> hitObjects, RECT desktopRect, std::vector<int> windowValues)
-: mHitObjects(hitObjects), mKeyboardRobot(),
-mMouseRobot(desktopRect.right, desktopRect.bottom, windowValues)
+	: mHitObjects(hitObjects), mKeyboardRobot(),
+	mMouseRobot(desktopRect.right, desktopRect.bottom, windowValues)
 {
 }
 
@@ -42,7 +42,7 @@ void Player::operator()()
 		//std::cout << "x move: " << mHitObjects[i].x() << ", y move: " << mHitObjects[i].y() << std::endl;
 		mKeyboardRobot.press_key(key);
 
-		processHitObjectHold(&mHitObjects[i], &waitTime, &afterHoldX, &afterHoldY);
+		process_hitobject_hold(&mHitObjects[i], &waitTime, &afterHoldX, &afterHoldY);
 
 		mKeyboardRobot.release_key();
 
@@ -70,7 +70,7 @@ void Player::operator()()
 	}
 }
 
-void Player::processHitObjectHold(HitObject* hitObject, int* waitTime, int* afterHoldX, int* afterHoldY)
+void Player::process_hitobject_hold(HitObject* hitObject, int* waitTime, int* afterHoldX, int* afterHoldY)
 {
 	switch (hitObject->type())
 	{
@@ -82,13 +82,34 @@ void Player::processHitObjectHold(HitObject* hitObject, int* waitTime, int* afte
 		break;
 	case HitObjectType::SLIDER:
 		*waitTime = hitObject->hold_for();
-		*afterHoldX = hitObject->x();
-		*afterHoldY = hitObject->y();
-		Sleep(*waitTime);
+		process_slider_movements(hitObject, afterHoldX, afterHoldX);
 		break;
 	case HitObjectType::SPINNER:
 		*waitTime = hitObject->hold_for();
 		mMouseRobot.emulate_spin(*waitTime, afterHoldX, afterHoldY);
 		break;
+	}
+}
+
+void Player::process_slider_movements(HitObject* hitObject, int* afterHoldX, int* afterHoldY)
+{
+	std::vector<SliderMovement>* pSliders = hitObject->slider_movements();
+
+	if (hitObject->slider_movements()->size() > 0)
+	{
+		mMouseRobot.emulate_line_move(
+			hitObject->x(),
+			hitObject->y(),
+			pSliders->at(0).to().first,
+			pSliders->at(0).to().second,
+			pSliders->at(0).time()
+			);
+		*afterHoldX = pSliders->at(0).to().first;
+		*afterHoldY = pSliders->at(0).to().second;
+	}
+	else
+	{
+		*afterHoldX = hitObject->x();
+		*afterHoldX = hitObject->y();
 	}
 }

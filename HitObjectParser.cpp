@@ -1,8 +1,8 @@
 #include "stdafx.h"
 #include "HitObjectParser.h"
 
-const std::vector<std::string> sliderIdentifiers(std::initializer_list<std::string>{"2", "3", "6", "22", "38", "70"});
-const std::vector<std::string> spinnerIdentifiers(std::initializer_list<std::string>{"8", "12"});
+std::regex rgxSlider(R"([LPB]\|.+)");
+std::regex rgxSpinner(R"(\d+)");
 
 HitObjectParser::HitObjectParser(Beatmap beatmap) : mBeatmap(beatmap)
 {
@@ -22,24 +22,68 @@ HitObject HitObjectParser::parse_hitobject(std::string line)
 	int holdFor = 0;
 	TimingSection section = mBeatmap.get_section_at(time);
 	HitObjectType type;
+	std::string identifier = tokens[5];
+	std::vector<SliderMovement> sliderMovements;
 
-	if (mUtilities.contains(sliderIdentifiers, tokens[3]))
+	if (std::regex_match(identifier, rgxSlider))
 	{
 		type = SLIDER;
 		double factor = section.ms_per_beat() / mBeatmap.slider_multiplier();
 		double relativeDuration = std::stod(tokens[7]);
 		double bounces = std::stod(tokens[6]);
 		holdFor = (int)(factor * relativeDuration * bounces);
+		sliderMovements = parse_slider_movements(identifier, holdFor);
 	}
-	else if (mUtilities.contains(spinnerIdentifiers, tokens[3]))
+	else if (std::regex_match(identifier, rgxSpinner))
 	{
 		type = SPINNER;
-		holdFor = std::stoi(tokens[5]) - time;
+		holdFor = std::stoi(identifier) - time;
 	}
 	else
 	{
 		type = NORMAL;
 	}
 
-	return HitObject(time, holdFor, x, y, type);
+	return HitObject(time, holdFor, x, y, type, sliderMovements);
+}
+
+std::vector<SliderMovement> HitObjectParser::parse_slider_movements(std::string line, int holdFor)
+{
+	switch (line[0])
+	{
+	case 'L':
+		return parse_l_slider(line, holdFor);
+	case 'P':
+		return parse_p_slider(line, holdFor);
+	case 'B':
+		return parse_b_slider(line, holdFor);
+	}
+}
+
+std::vector<SliderMovement> HitObjectParser::parse_l_slider(std::string line, int holdFor)
+{
+	std::vector<SliderMovement> sliderMovements;
+	std::vector<std::string> tokens = mUtilities.split(line, "|");
+	std::pair<int, int> to;
+	std::vector<std::string> subTokens;
+	for (int i = 1; i < tokens.size(); i++)
+	{
+		subTokens = mUtilities.split(tokens[i], ":");
+		to.first = std::stoi(subTokens[0]);
+		to.second = std::stoi(subTokens[1]);
+		sliderMovements.push_back(SliderMovement(to, holdFor / (tokens.size() - 1)));
+	}
+	return sliderMovements;
+}
+
+std::vector<SliderMovement> HitObjectParser::parse_p_slider(std::string line, int holdFor)
+{
+	std::vector<SliderMovement> sliderMovements;
+	return sliderMovements;
+}
+
+std::vector<SliderMovement> HitObjectParser::parse_b_slider(std::string line, int holdFor)
+{
+	std::vector<SliderMovement> sliderMovements;
+	return sliderMovements;
 }

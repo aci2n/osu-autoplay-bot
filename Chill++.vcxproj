@@ -90,6 +90,7 @@
     <ClInclude Include="MouseRobot.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="ProcessIdFinder.h" />
+    <ClInclude Include="SliderMovement.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="TimingSection.h" />
@@ -108,6 +109,7 @@
     <ClCompile Include="MouseRobot.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="ProcessIdFinder.cpp" />
+    <ClCompile Include="SliderMovement.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
