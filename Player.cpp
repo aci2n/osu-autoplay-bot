@@ -94,22 +94,38 @@ void Player::process_hitobject_hold(HitObject* hitObject, int* waitTime, int* af
 void Player::process_slider_movements(HitObject* hitObject, int* afterHoldX, int* afterHoldY)
 {
 	std::vector<SliderMovement>* pSliders = hitObject->slider_movements();
+	const int size = hitObject->slider_movements()->size();
+	int previousX = hitObject->x();
+	int previousY = hitObject->y();
+	int currentX;
+	int currentY;
 
-	if (hitObject->slider_movements()->size() > 0)
+	//if only because not all sliders are implemented yet
+	if (size > 0)
 	{
-		mMouseRobot.emulate_line_move(
-			hitObject->x(),
-			hitObject->y(),
-			pSliders->at(0).to().first,
-			pSliders->at(0).to().second,
-			pSliders->at(0).time()
-			);
-		*afterHoldX = pSliders->at(0).to().first;
-		*afterHoldY = pSliders->at(0).to().second;
+		for (int i = 0; i < size; i++)
+		{
+			currentX = pSliders->at(i).to().first;
+			currentY = pSliders->at(i).to().second;
+
+			mMouseRobot.emulate_line_move(
+				previousX,
+				previousY,
+				currentX,
+				currentY,
+				pSliders->at(i).time()
+				);
+
+			previousX = currentX;
+			previousY = currentY;
+			
+		}
 	}
 	else
 	{
-		*afterHoldX = hitObject->x();
-		*afterHoldX = hitObject->y();
+		Sleep(hitObject->hold_for());
 	}
+
+	*afterHoldX = previousX;
+	*afterHoldY = previousY;
 }
