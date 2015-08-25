@@ -84,6 +84,7 @@
     <ClInclude Include="BeatmapParser.h" />
     <ClInclude Include="CoordinatesTranslator.h" />
     <ClInclude Include="HitObject.h" />
+    <ClInclude Include="HitObjectParser.h" />
     <ClInclude Include="KeyboardHook.h" />
     <ClInclude Include="KeyboardRobot.h" />
     <ClInclude Include="MouseRobot.h" />
@@ -92,6 +93,7 @@
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="TimingSection.h" />
+    <ClInclude Include="Utilities.h" />
     <ClInclude Include="WindowHelper.h" />
   </ItemGroup>
   <ItemGroup>
@@ -100,6 +102,7 @@
     <ClCompile Include="Chill++.cpp" />
     <ClCompile Include="CoordinatesTranslator.cpp" />
     <ClCompile Include="HitObject.cpp" />
+    <ClCompile Include="HitObjectParser.cpp" />
     <ClCompile Include="KeyboardHook.cpp" />
     <ClCompile Include="KeyboardRobot.cpp" />
     <ClCompile Include="MouseRobot.cpp" />
@@ -110,6 +113,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="TimingSection.cpp" />
+    <ClCompile Include="Utilities.cpp" />
     <ClCompile Include="WindowHelper.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
