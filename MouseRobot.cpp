@@ -2,13 +2,14 @@
 #include "MouseRobot.h"
 #define CYCLES_FACTOR 3
 #define SPINNER_SPEED 10 //lower == faster
+#define SPINNER_POINTS 4
 
 MouseRobot::MouseRobot()
 {
 }
 
 MouseRobot::MouseRobot(int screenWidth, int screenHeight, std::vector<int> windowValues)
-: mScreenWidth(screenWidth), mScreenHeight(screenHeight)
+	: mScreenWidth(screenWidth), mScreenHeight(screenHeight)
 {
 	mInput.type = INPUT_MOUSE; mInput.mi.mouseData = 0;
 	mInput.mi.dwFlags = MOUSEEVENTF_ABSOLUTE;
@@ -90,8 +91,8 @@ void MouseRobot::emulate_spin(int time, int* lastX, int* lastY)
 			mSpinnerPoints[n].second,
 			SPINNER_SPEED
 			);
-		c = c < 3 ? c + 1 : 0;
-		n = n < 3 ? n + 1 : 0;
+		c = c < SPINNER_POINTS - 1 ? c + 1 : 0;
+		n = n < SPINNER_POINTS - 1 ? n + 1 : 0;
 	}
 
 	*lastX = mSpinnerPoints[c].first;
@@ -100,7 +101,7 @@ void MouseRobot::emulate_spin(int time, int* lastX, int* lastY)
 
 void MouseRobot::init_spinner_points(int x, int y, int spinnerWidth)
 {
-	mSpinnerPoints = std::vector<std::pair<int, int>>(4);
+	mSpinnerPoints = std::vector<std::pair<int, int>>(SPINNER_POINTS);
 	mSpinnerPoints[0].first = x + spinnerWidth;
 	mSpinnerPoints[0].second = y;
 	mSpinnerPoints[1].first = x;

@@ -36,6 +36,8 @@ std::vector<int> CoordinatesTranslator::translate_coordinates(RECT rect, std::ve
 		finalX = playAreaLeft + (int)(h.x() * factorX);
 		finalY = playAreaTop + (int)(h.y() * factorY);
 		h.set_coordinates(finalX, finalY);
+
+		//translate slider movement coordinates
 		pSliders = h.slider_movements();
 		for (int i = 0; i < pSliders->size(); i++)
 		{

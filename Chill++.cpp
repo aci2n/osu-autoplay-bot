@@ -13,7 +13,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	{
 		BeatmapParser parser(R"(C:\Users\alvaro.daniel.calace\AppData\Local\osu!\Songs\118768 xi - Akasha\xi - Akasha (Jemmmmy) [Test].osu)");
 		Beatmap beatmap(parser.parse_beatmap());
-		int procId = ProcessIdFinder().get_process_id(std::wstring(L"osu!.exe"));
+		int procId = ProcessIdFinder().get_process_id(std::wstring(L"xampp-control.exe"));
 		WindowHelper w;
 		RECT windowRect = w.get_rect(procId);
 		RECT desktopRect = w.get_desktop_rect();
