@@ -6,6 +6,10 @@
 *.user
 *.sln.docstates
 
+# Project files
+*.vcxproj
+*.vcxproj.filters
+
 # Build results
 [Dd]ebug/
 [Dd]ebugPublic/
