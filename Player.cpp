@@ -57,6 +57,7 @@ void Player::operator()()
 			sleepTime = diff - waitTime + adjustedTime;
 			if (sleepTime > 0)
 			{
+				//std::cout << "afterholdX: " << afterHoldX << ", afterholdY: " << afterHoldY << std::endl;
 				mMouseRobot.emulate_line_move(afterHoldX, afterHoldY, mHitObjects[i + 1].x(), mHitObjects[i + 1].y(), sleepTime);
 			}
 			else
@@ -105,6 +106,7 @@ void Player::process_slider_movements(HitObject* hitObject, int* afterHoldX, int
 	{
 		for (int i = 0; i < size; i++)
 		{
+			std::cout << "sliding... components: " << size << std::endl;
 			currentX = pSliders->at(i).to().first;
 			currentY = pSliders->at(i).to().second;
 

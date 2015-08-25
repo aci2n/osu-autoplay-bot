@@ -77,13 +77,11 @@ std::vector<SliderMovement> HitObjectParser::parse_l_slider(std::string line, in
 		previous = to;
 	}
 
-	int factor;
 	previous = std::pair<int, int>(x, y);
 	for (SliderMovement& sm : sliderMovements)
 	{
 		to = sm.to();
-		factor = totalLength / calculate_length(previous, to);
-		sm.set_time(holdFor / factor);
+		sm.set_time(holdFor / (totalLength / calculate_length(previous, to)));
 		previous = to;
 	}
 

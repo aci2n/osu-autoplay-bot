@@ -15,7 +15,7 @@ std::vector<int> CoordinatesTranslator::translate_coordinates(RECT rect, std::ve
 	int resX = rect.right - rect.left;
 	int resY = rect.bottom - rect.top;
 
-	int playAreaLeft = rect.left + int(resX * .105);
+	int playAreaLeft = rect.left + int(resX * .13); //.105 casa y .13 laburo
 	int playAreaTop = rect.top + int(resY * .14);
 	int playAreaRight = rect.right - int(resX * .1);
 	int playAreaBottom = rect.bottom - int(resY * .075);
