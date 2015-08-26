@@ -15,7 +15,7 @@ public:
 	void operator()();
 	~Player();
 private:
-	void process_hitobject_hold(HitObject*, int*, int*, int*);
+	void process_hitobject_hold(HitObject*, int*, int*);
 	void process_slider_movements(HitObject*, int*, int*);
 };
 

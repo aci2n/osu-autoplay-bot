@@ -1,7 +1,6 @@
 #include "stdafx.h"
 #include "MouseRobot.h"
-#define CYCLES_FACTOR 3
-#define SPINNER_SPEED 10 //lower == faster
+#define SPINNER_SPEED 20 //lower == faster
 #define SPINNER_POINTS 4
 
 MouseRobot::MouseRobot()
@@ -28,6 +27,7 @@ void MouseRobot::mouse_move_absolute(int x, int y)
 	mInput.mi.dy = (y * (0xFFFF / mScreenHeight));
 	mInput.mi.dwFlags = (MOUSEEVENTF_ABSOLUTE | MOUSEEVENTF_MOVE);
 	SendInput(1, &mInput, sizeof(INPUT));
+	//std::cout << "absolute move: " << x << ", " << y << std::endl;
 }
 
 void MouseRobot::emulate_line_move(int xFrom, int yFrom, int xTo, int yTo, int time)
@@ -39,12 +39,7 @@ void MouseRobot::emulate_line_move(int xFrom, int yFrom, int xTo, int yTo, int t
 	{
 		const int minOffset = get_min_not_zero(abs(offsetX), abs(offsetY));
 		//std::cout << "time: " << time << ", minOffset: " << minOffset << std::endl;
-		int cycles = min(time, minOffset);
-		const int cyclesWithFactor = cycles / CYCLES_FACTOR;
-		if (cyclesWithFactor > 0)
-		{
-			cycles = cyclesWithFactor;
-		}
+		const int cycles = min(time, minOffset);
 		const int moveX = offsetX / cycles;
 		const int moveY = offsetY / cycles;
 		const int sleepTime = time / cycles;

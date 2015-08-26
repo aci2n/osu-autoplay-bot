@@ -15,7 +15,7 @@ std::vector<int> CoordinatesTranslator::translate_coordinates(RECT rect, std::ve
 	int resX = rect.right - rect.left;
 	int resY = rect.bottom - rect.top;
 
-	int playAreaLeft = rect.left + int(resX * .13); //.105 casa y .13 laburo
+	int playAreaLeft = rect.left + int(resX * .105); //.105 casa y .13 laburo
 	int playAreaTop = rect.top + int(resY * .14);
 	int playAreaRight = rect.right - int(resX * .1);
 	int playAreaBottom = rect.bottom - int(resY * .075);
@@ -30,6 +30,7 @@ std::vector<int> CoordinatesTranslator::translate_coordinates(RECT rect, std::ve
 	int finalY;
 	std::vector<SliderMovement>* pSliders;
 	std::pair<int, int> to;
+	int size;
 
 	for (HitObject& h : *hitObjects)
 	{
@@ -39,7 +40,8 @@ std::vector<int> CoordinatesTranslator::translate_coordinates(RECT rect, std::ve
 
 		//translate slider movement coordinates
 		pSliders = h.slider_movements();
-		for (int i = 0; i < pSliders->size(); i++)
+		size = pSliders->size();
+		for (int i = 0; i < size; i++)
 		{
 			to = pSliders->at(i).to();
 			finalX = playAreaLeft + (int)(to.first * factorX);

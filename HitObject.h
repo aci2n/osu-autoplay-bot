@@ -26,5 +26,7 @@ public:
 	int y();
 	HitObjectType type();
 	std::vector<SliderMovement>* slider_movements();
+	void HitObject::set_time(int);
+	void HitObject::set_hold_for(int);
 };
 

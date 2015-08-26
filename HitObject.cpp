@@ -47,3 +47,13 @@ std::vector<SliderMovement>* HitObject::slider_movements()
 {
 	return &mSliderMovements;
 }
+
+void HitObject::set_time(int time)
+{
+	mStartTime = time;
+}
+
+void HitObject::set_hold_for(int holdFor)
+{
+	mHoldFor = holdFor;
+}

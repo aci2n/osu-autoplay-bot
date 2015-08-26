@@ -21,4 +21,5 @@ public:
 	TimingSection get_section_at(int time);
 	double slider_multiplier();
 	std::vector<HitObject>* get_hit_objects();
+	void apply_doubletime();
 };

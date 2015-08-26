@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "Beatmap.h"
+#define DT_CONSTANT 0.6666666666666667
 
 Beatmap::Beatmap(std::string title, std::string artist, std::string version,
 	double overallDifficulty, double sliderMultiplier, double sliderTickRate,
@@ -43,4 +44,17 @@ double Beatmap::slider_multiplier()
 std::vector<HitObject>* Beatmap::get_hit_objects()
 {
 	return &mHitObjects;
+}
+
+void Beatmap::apply_doubletime()
+{
+	for (HitObject& h : mHitObjects)
+	{
+		h.set_time((int)(h.start_time() * DT_CONSTANT));
+		h.set_hold_for((int)(h.hold_for() * DT_CONSTANT));
+		for (SliderMovement& sm : *(h.slider_movements()))
+		{
+			sm.set_time((int)(sm.time() * DT_CONSTANT));
+		}
+	}
 }
